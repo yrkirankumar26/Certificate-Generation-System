@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <h3 class="mb-4"><i class="fa fa-upload me-2 gradient-text"></i>Generate Certificates</h3>
+  <div class="row g-4">
+    <div class="col-lg-7">
+      <div class="glass-card p-4">
+        <h5>1. Upload participant data</h5>
+        <form method="post" enctype="multipart/form-data" id="uploadForm">
+          <div id="dropzone" class="dropzone text-center p-4 my-3">
+            <i class="fa fa-cloud-arrow-up fa-2x mb-2"></i>
+            <p class="m-0">Drag & drop CSV/XLSX here, or click to browse</p>
+            <input type="file" name="data_file" id="dataFile" accept=".csv,.xlsx" hidden required>
+            <small id="fileName" class="text-muted-2 d-block mt-2"></small>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Template</label>
+            <select name="template" class="form-select">
+              <option value="default">Default (built-in)</option>
+              {% for t in templates %}<option value="{{ t }}">{{ t }}</option>{% endfor %}
+            </select>
+          </div>
+          <div class="progress mb-3 d-none" id="prog"><div class="progress-bar bg-info" style="width:0%"></div></div>
+          <button class="btn btn-neon w-100"><i class="fa fa-bolt me-2"></i>Generate</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="glass-card p-4">
+        <h5>2. Manage templates</h5>
+        <form method="post" action="{{ url_for('upload_template') }}" enctype="multipart/form-data" class="mb-3">
+          <input type="file" name="template_file" accept="image/png,image/jpeg" class="form-control mb-2" required>
+          <button class="btn btn-outline-light w-100"><i class="fa fa-image me-2"></i>Upload Template</button>
+        </form>
+        {% for t in templates %}
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <img src="{{ url_for('preview_template', name=t) }}" class="rounded" style="width:60px;height:40px;object-fit:cover">
+          <span class="flex-grow-1">{{ t }}</span>
+          <form method="post" action="{{ url_for('delete_template', name=t) }}">
+            <button class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
+          </form>
+        </div>
+        {% else %}<small class="text-muted-2">No templates uploaded yet.</small>{% endfor %}
+      </div>
+      <div class="glass-card p-4 mt-3">
+        <h6>Expected columns</h6>
+        <code>Certificate ID, Participant Name, Email, Course, Organization, Date, Duration, Grade, Instructor, Remarks</code>
+        <p class="text-muted-2 mt-2 mb-0"><small>Only "Participant Name" is required; missing IDs will be auto-generated.</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

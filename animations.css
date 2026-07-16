@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero py-5">
+  <div class="container text-center py-5">
+    <h1 class="display-3 fw-bold gradient-text" data-aos="fade-up">Generate Beautiful Certificates in Seconds</h1>
+    <p class="lead mt-3" data-aos="fade-up" data-aos-delay="100">Bulk-generate branded PDF certificates with QR verification, email delivery, and a stunning dashboard.</p>
+    <div class="mt-4 d-flex justify-content-center gap-3" data-aos="fade-up" data-aos-delay="200">
+      <a href="{{ url_for('login') }}" class="btn btn-neon btn-lg"><i class="fa fa-bolt me-2"></i>Generate Certificates</a>
+      <a href="{{ url_for('verify') }}" class="btn btn-outline-light btn-lg"><i class="fa fa-qrcode me-2"></i>Verify</a>
+    </div>
+  </div>
+</section>
+
+<section class="container my-5">
+  <div class="row g-4">
+    {% for f in [
+      ('fa-file-import','Bulk Upload','CSV or XLSX with hundreds of participants.'),
+      ('fa-paint-brush','Custom Templates','Upload branded backgrounds & fonts.'),
+      ('fa-qrcode','QR Verification','Every certificate is signed with a scannable QR.'),
+      ('fa-envelope','Email Delivery','Send PDFs directly to participants.'),
+      ('fa-chart-line','Analytics','Track generation, courses, templates.'),
+      ('fa-shield-halved','Secure','Session-based admin, hashed passwords.')
+    ] %}
+    <div class="col-md-4" data-aos="fade-up">
+      <div class="glass-card p-4 h-100">
+        <i class="fa {{ f[0] }} fa-2x mb-3 gradient-text"></i>
+        <h5>{{ f[1] }}</h5><p class="text-muted-2">{{ f[2] }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="container my-5">
+  <div class="row text-center g-3">
+    <div class="col-md-3"><div class="glass-card p-4"><h2 class="gradient-text">{{ stats.total }}</h2><p>Certificates</p></div></div>
+    <div class="col-md-3"><div class="glass-card p-4"><h2 class="gradient-text">{{ stats.today }}</h2><p>Today</p></div></div>
+    <div class="col-md-3"><div class="glass-card p-4"><h2 class="gradient-text">{{ stats.participants }}</h2><p>Participants</p></div></div>
+    <div class="col-md-3"><div class="glass-card p-4"><h2 class="gradient-text">100%</h2><p>Automation</p></div></div>
+  </div>
+</section>
+
+<section class="container my-5">
+  <h2 class="text-center mb-4">How It Works</h2>
+  <div class="timeline">
+    {% for step in [('Upload','Upload a CSV/XLSX file with participant data.'),
+                    ('Choose Template','Pick a saved certificate background or use the default.'),
+                    ('Generate','PDFs and QR codes are created in bulk.'),
+                    ('Distribute','Download ZIP or email each participant.')] %}
+      <div class="tl-item glass-card p-3 my-3" data-aos="fade-up">
+        <h5 class="gradient-text">{{ loop.index }}. {{ step[0] }}</h5><p class="m-0">{{ step[1] }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="container my-5">
+  <h2 class="text-center mb-4">Loved by Teams</h2>
+  <div class="row g-4">
+    {% for t in [('Aditi, Event Lead','Cut our post-event work from 3 days to 15 minutes.'),
+                 ('Rohit, Trainer','QR verification is a game changer for authenticity.'),
+                 ('Neha, HR','Bulk-emailing 500 certificates worked perfectly.')] %}
+      <div class="col-md-4"><div class="glass-card p-4 h-100"><p>"{{ t[1] }}"</p><small class="text-muted-2">— {{ t[0] }}</small></div></div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

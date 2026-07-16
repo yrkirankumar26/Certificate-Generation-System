@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5 text-center">
+  <div class="glass-card p-5 mx-auto" style="max-width:520px" data-aos="zoom-in">
+    <h1 class="display-1 gradient-text">{{ code }}</h1>
+    <p class="lead">{{ message }}</p>
+    <a class="btn btn-neon mt-3" href="{{ url_for('index') }}"><i class="fa fa-home me-2"></i>Go Home</a>
+  </div>
+</div>
+{% endblock %}

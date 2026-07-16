@@ -1,0 +1,4 @@
+.dashboard-wrap{padding:16px}
+.sidebar{position:sticky;top:80px;height:calc(100vh - 100px);border-radius:18px}
+.sb-link{display:block;color:var(--fg);opacity:.8;padding:10px 12px;border-radius:10px;text-decoration:none;margin-bottom:4px;transition:.2s}
+.sb-link:hover,.sb-link.active{background:var(--grad);color:#fff;opacity:1}

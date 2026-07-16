@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3><i class="fa fa-clock-rotate-left me-2 gradient-text"></i>History</h3>
+    <a class="btn btn-outline-light" href="{{ url_for('history_export') }}"><i class="fa fa-file-csv me-2"></i>Export CSV</a>
+  </div>
+  <form class="glass-card p-3 mb-3" method="get">
+    <div class="input-group">
+      <input class="form-control" name="q" value="{{ q }}" placeholder="Search by ID, name, or course...">
+      <button class="btn btn-neon"><i class="fa fa-search"></i></button>
+    </div>
+  </form>
+  <div class="glass-card p-3">
+    <div class="table-responsive">
+      <table class="table table-dark table-hover align-middle" id="histTable">
+        <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Course</th><th>Template</th><th>Date</th><th>Actions</th></tr></thead>
+        <tbody>
+          {% for r in rows %}
+          <tr>
+            <td><code>{{ r.certificate_id }}</code></td>
+            <td>{{ r.participant_name }}</td>
+            <td>{{ r.email }}</td>
+            <td>{{ r.course }}</td>
+            <td>{{ r.template }}</td>
+            <td>{{ r.created_at[:19] }}</td>
+            <td class="d-flex gap-1">
+              {% if r.file_path %}
+              <a class="btn btn-sm btn-outline-light" href="{{ url_for('certificate_file', filename=r.file_path.split('/')[-1].split('\\')[-1]) }}" target="_blank"><i class="fa fa-download"></i></a>
+              {% endif %}
+              {% if r.email %}
+              <button class="btn btn-sm btn-outline-info email-btn" data-cid="{{ r.certificate_id }}"><i class="fa fa-envelope"></i></button>
+              {% endif %}
+              <form method="post" action="{{ url_for('history_delete', cid=r.certificate_id) }}" onsubmit="return confirm('Delete this record?')">
+                <button class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="7" class="text-center text-muted-2">No records.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
